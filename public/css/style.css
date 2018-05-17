@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+
+body{
+    margin-top: 20px;
+}
+#head
+{
+    font-family: 'Source Sans Pro', sans-serif;
+    display: inline-block;
+    margin: 20px 0 0 20px;
+}
+#image
+{
+    margin-top:-70px;
+}
+
+.text
+{
+    text-align: center;
+    font-size: 25px;
+    color: #0aa3d1;
+}

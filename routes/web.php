@@ -12,5 +12,19 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home.index');
 });
+
+Auth::routes();
+
+Route::get('register', function(){
+    return redirect()->route('login')->with('msg','Log in to use this system');
+})->name('auth.register');
+
+Route::get('admin',[
+    'uses' => 'AdminController@getIndex',
+    'as' => 'admin.index',
+    'middleware' => 'auth'
+]);
+
+Route::get('/home', 'HomeController@index')->name('home');
