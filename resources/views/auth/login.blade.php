@@ -10,7 +10,7 @@
             </div>
         @endif
             <div class="card">
-                <div class="card-header text">{{ __('Login') }}</div>
+                <div class="card-header text">{{ __('Admin Login') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">

@@ -10,19 +10,19 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-3 justify-content-center">
-                                <a href="#" class="btn btn-success"> Book Issue </a>
+                                <a href="{{ route('book.issue') }}" class="btn btn-success"> Book Issue </a>
                             </div>
 
                             <div class="col-md-3 justify-content-center">
-                                <button class="btn btn-warning">Book Return </button>
+                                <a href="{{ route('book.return') }}" class="btn btn-warning">Book Return </a>
                             </div>
 
                             <div class="col-md-3 justify-content-center">
-                                <button class="btn btn-danger"> Check Status </button>
+                                <a href="{{ route('book.status') }}" class="btn btn-danger"> Check Status </a>
                             </div>
 
                             <div class="col-md-3 justify-content-center">
-                                <button class="btn btn-info"> Book Search </button>
+                                <a href="{{ route('book.search') }}" class="btn btn-info"> Book Search </a>
                             </div>
                         </div>
                     </div>

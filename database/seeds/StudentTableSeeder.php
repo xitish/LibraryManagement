@@ -14,7 +14,7 @@ class StudentTableSeeder extends Seeder
         for ($x = 1; $x <= 10; $x++) {
             $student = new \App\Student([
                 'roll_no' => '072BCT'.$x,
-                'name' => 'Pukar Ghimire'.$x,
+                'name' => 'Pukar Ghimire '.$x,
             ]);
             $student->save();
         }

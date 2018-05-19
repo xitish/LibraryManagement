@@ -11,11 +11,11 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <a href="{{ route('login') }}" class="btn btn-success"> {{ __('Login') }} </a>
+                            <a href="{{ route('login') }}" class="btn btn-success"> {{ __('Admin Login') }} </a>
                         </div>
 
                         <div class="col-md-6">
-                            <button class="btn btn-primary"> Book List </button>
+                            <a href="{{ route('student.index') }}" class="btn btn-primary"> Student Login </a>
                         </div>
                     </div>
                     

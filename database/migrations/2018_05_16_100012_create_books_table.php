@@ -18,6 +18,7 @@ class CreateBooksTable extends Migration
             $table->string('name');
             $table->string('author');
             $table->string('publication');
+            $table->integer('student_id')->nullable();
             $table->timestamps();
         });
     }

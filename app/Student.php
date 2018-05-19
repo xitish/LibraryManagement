@@ -9,4 +9,9 @@ class Student extends Model
     protected $fillable = [
         'roll_no', 'name',
     ];
+
+    public function books()
+    {
+        return $this->hasMany('App\Book');
+    }
 }
