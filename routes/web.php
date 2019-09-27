@@ -23,7 +23,7 @@ Route::get('register', function(){
 
 Route::get('student', function () {
     return view('student.index');
-});
+})->name('student.index');
 
 Route::group(['prefix' => 'admin','middleware' => ['auth']], function(){
 
