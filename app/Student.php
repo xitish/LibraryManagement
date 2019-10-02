@@ -14,4 +14,9 @@ class Student extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function singleBooks()
+    {
+        return $this->hasMany('App\SingleBook');
+    }
 }

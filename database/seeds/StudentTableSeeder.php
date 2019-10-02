@@ -11,10 +11,13 @@ class StudentTableSeeder extends Seeder
      */
     public function run()
     {
-        for ($x = 1; $x <= 10; $x++) {
+        for ($x = 2; $x <= 11; $x++) {
             $student = new \App\Student([
-                'roll_no' => '072BCT'.$x,
-                'name' => 'Pukar Ghimire '.$x,
+                'name' => 'Student No '.$x,
+                'rollyear' => '072',
+                'rollfaculty' => 'BCT',
+                'rollno' => '0'.$x,
+                'user_id' => $x,
             ]);
             $student->save();
         }

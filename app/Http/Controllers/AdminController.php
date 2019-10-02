@@ -19,7 +19,7 @@ class AdminController extends Controller
             'rollno' => 'required|min:7'
         ]);
         $roll = $request->input('rollno');
-        $student = Student::where('roll_no','=',$roll)->with('books')->first();
+        $student = Student::where('rollno`','=',$roll)->with('books')->first();
         if (empty($student))
         {
             return redirect()->back()->with('msg','No student Found.  कुनै विद्यार्थी भेटिएन');

@@ -9,6 +9,16 @@ class Book extends Model
     protected $primaryKey = 'book_id';
     
     protected $fillable = [
-        'book_id', 'name', 'author','publication','student_id', 'photo'
+        'book_id', 'name', 'author','publication', 'photo'
     ];
+
+    public function student()
+    {
+        return $this->belongsTo('App\Student');
+    }
+
+    public function singleBooks()
+    {
+        return $this->hasMany('App\SingleBook');
+    }
 }

@@ -19,7 +19,6 @@ class CreateStudentsTable extends Migration
             $table->string('rollyear');
             $table->string('rollfaculty');
             $table->string('rollno');
-            $table->boolean('admin');
             $table->integer('user_id');
             $table->unique(['rollyear','rollfaculty','rollno']);
             $table->timestamps();

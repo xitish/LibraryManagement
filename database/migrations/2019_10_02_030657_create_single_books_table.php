@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIssuesTable extends Migration
+class CreateSingleBooksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateIssuesTable extends Migration
      */
     public function up()
     {
-        Schema::create('issues', function (Blueprint $table) {
+        Schema::create('single_books', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('book_number')->unique();
+            $table->string('student_id')->nullable()->default(null);
             $table->integer('book_id');
-            $table->integer('student_id');
-            $table->boolean('returned')->default(false);
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateIssuesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('issues');
+        Schema::dropIfExists('single_books');
     }
 }

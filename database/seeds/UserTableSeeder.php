@@ -15,7 +15,19 @@ class UserTableSeeder extends Seeder
             'name' => 'Pukar',
             'username' => 'pukar',
             'password' => Hash::make('pukar11'),
+            'admin' => true,
         ]);
         $user->save();
+
+        for($i = 1; $i <= 10; $i++)
+        {
+            $user =  new App\User([
+                'name' => 'Pukar',
+                'username' => 'pukar'.$i,
+                'password' => Hash::make('pukar11'),
+                'admin' => true,
+            ]);
+            $user->save();
+        }
     }
 }
