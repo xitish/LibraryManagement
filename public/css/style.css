@@ -1,14 +1,29 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
 
-body{
-    margin-top: 20px;
-}
 #head
 {
     font-family: 'Source Sans Pro', sans-serif;
     display: inline-block;
     margin: 20px 0 0 20px;
 }
+
+a, a:hover
+{
+    text-decoration: none;
+    color: unset;
+}
+
+.huge
+{
+    font-size: 60px;
+    
+}
+
+.flex
+{
+    display:flex;
+}
+
 #image
 {
     margin-top:-70px;
@@ -19,4 +34,72 @@ body{
     text-align: center;
     font-size: 25px;
     color: #0aa3d1;
+}
+
+.top-navbar
+{
+    background-color: rgb(21, 21, 26);
+    color: azure;
+}
+
+.sidepanel
+{
+    position: fixed;
+    top: 0px;
+    background-color: rgb(26, 26, 31);
+    color: azure;
+    display: block;
+    height: 100%;
+}
+
+.profile
+{
+    padding: 20px;
+    background-color: rgb(21, 21, 26);
+}
+
+.profile-photo
+{
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+}
+
+.name
+{
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: .2em;
+}
+
+.menu-item:hover
+{
+    background-color: rgb(32, 32, 39);
+    transition: all 0.2s linear;
+}
+
+.menu-item-icon
+{
+    height: 30px;
+    padding:5px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.menu-item-text
+{
+    text-transform: capitalize;
+    line-height: 1em;
+}
+
+.navbar-text
+{
+    flex:1;
+    margin-top:auto;
+    margin-bottom:auto;
+}
+
+.mycard
+{
+    color: rgb(19, 19, 19);
 }

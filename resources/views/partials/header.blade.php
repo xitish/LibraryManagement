@@ -1,4 +1,4 @@
-<div class="row" style="margin-bottom:40px;">
+<div class="row ml-0 mr-0" style="margin-bottom:40px;">
     <div class="col-md-6 offset-md-3 top">
 
         <img src="{{ URL::to('images/tu.png') }}" height=100 id="image">
