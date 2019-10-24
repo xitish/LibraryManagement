@@ -102,4 +102,25 @@ a, a:hover
 .mycard
 {
     color: rgb(19, 19, 19);
+    border-width: 2px;
+}
+
+.book-list-top
+{
+    flex:1; 
+    margin:auto 0 0 0;
+}
+
+#book_name_input
+{
+    float: right;
+    margin: 0 0 0 auto;
+    border: unset;
+    border-bottom: 2px solid #28a745;
+    color: #28a745;
+}
+
+#book_name_input:focus
+{
+    outline: unset;
 }

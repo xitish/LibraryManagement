@@ -11,6 +11,12 @@
 |
 */
 
+Route::group(['prefix' => 'admin','middleware' => ['auth']], function(){
+
+    Route::resource('book', 'Admin\BookController');
+
+});
+
 Route::get('/', function () {
     return view('home.index');
 });

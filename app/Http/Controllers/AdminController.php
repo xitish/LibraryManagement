@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Book;
+use App\SingleBook;
 use App\Student;
 
 class AdminController extends Controller
 {
     public function getIndex()
     {
-        return view('admin.index');
+        $total = SingleBook::count();
+        $different = Book::count();
+        return view ('admin.index', compact('total', 'different'));
     }
 
     public function getList(Request $request)

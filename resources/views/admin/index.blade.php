@@ -11,8 +11,8 @@
                     <a href="#">
                         <div class="card mycard">
                             <div class="card-body">
-                                <div class="huge">72</div>
-                                <h5>Total Books <small class="text-muted float-right">12 Different Books</small></h5>
+                                <div class="huge">{{$total}}</div>
+                                <h5>Total Books <small class="text-muted float-right">{{$different}} Different Books</small></h5>
                             </div>
                         </div>
                     </a>
