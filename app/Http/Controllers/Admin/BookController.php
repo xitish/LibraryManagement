@@ -103,7 +103,8 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        //
+        $book = Book::with('singleBooks')->find($book->id);
+        return view('book.show', compact('book'));
     }
 
     /**
@@ -114,7 +115,8 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        //
+        $count = $book->singleBooks()->count();
+        return view('book.edit', compact('book', 'count'));
     }
 
     /**
@@ -126,7 +128,84 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //
+        $this->validate($request, [ 
+            'bookname' => 'required|min:5',
+            'author' => 'required',
+            'publication' => 'required',
+            'description' => 'sometimes|min:10',
+            'photo' => 'sometimes|mimes:jpeg,jpg,png|max:1024',
+            'number' => 'required|numeric'
+        ]);
+
+        // If new photo is selected, delete the old photo and upload the new photo, else keep the old photo
+        if ($request->hasFile('photo')) {
+            Storage::delete(str_replace("storage/", "", $book->photo));                 // Delete Old Photo
+            $photo = 'storage/' . $request->file('photo')->store('images/bookphotos');
+        }
+        else{
+            $photo = $book->photo;
+        }
+
+        $book->update([
+            'name' => $request->input('bookname'),
+            'author' => $request->input('author'),
+            'publication' => $request->input('publication'),
+            'description' => $request->input('description'),
+            'photo' => $photo,
+        ]);
+
+        // If the number of copies has changed
+        if($book->singleBooks()->count() != $request->input('number'))
+        {
+            $difference = abs($book->singleBooks()->count() - $request->input('number'));
+
+            // If number of copies is increased, create new copies
+            if($request->input('number') > $book->singleBooks()->count())
+            {
+                $lastBook = SingleBook::orderBy('book_number', 'desc')->first()->book_number;
+                $bookNumber = $lastBook ;
+
+                // Array to keep the list of book numbers of added copies of a Book
+                $addedBookList = array();
+
+                // Add the required number of copies of the Book specified by the difference field.
+                for($i = 0; $i < $difference; $i++)
+                {
+                    $bookNumber++;
+                    $singleBook = SingleBook::create([
+                        'book_number' => $bookNumber,
+                        'student_id' => null,
+                        'book_id' => $book->id,
+                    ]);
+
+                    // Add Book Number of current copy to array
+                    array_push($addedBookList, $bookNumber);
+                }
+
+                $book = Book::with('singleBooks')->find($book->id);
+                return view('book.show', compact('addedBookList', 'book'));
+            }
+
+            // Otherwise, the number of copies is decreased, so delete some copies.
+            else
+            {
+                // Array to keep the list of book numbers of deleted copies of a Book
+                $deletedBookList = array();
+
+                // Take last n copies of the book to be deleted.
+                $singleBooks = SingleBook::where('book_id', $book->id)->orderBy('book_number', 'desc')->take($difference)->get();
+
+                // Delete each copy and keep record of deleted book_numbers
+                foreach($singleBooks as $sb)
+                {
+                    array_push($deletedBookList, $sb->book_number);
+                    $sb->delete();
+                }
+
+                $book = Book::with('singleBooks')->find($book->id);
+                return view('book.show', compact('deletedBookList', 'book'));
+            }
+        }
     }
 
     /**
@@ -140,6 +219,6 @@ class BookController extends Controller
         Storage::delete(str_replace("storage/", "", $book->photo));
         $book->singleBooks()->delete();
         $book->delete();
-        dd('deleted');
+        return redirect()->route('book.index')->with('delete', 'The Book Has Been Deleted');
     }
 }

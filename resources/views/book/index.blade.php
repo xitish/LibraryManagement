@@ -25,6 +25,9 @@
                     </div>
                 </div>
             </div>
+            @if(Session::has('delete'))
+                <div class="alert alert-danger alert-fade">{{Session::get('delete')}}</div>
+            @endif
             <table class="table table-hover table-striped">
                 <thead class="thead-dark">
                     <tr>
@@ -49,7 +52,7 @@
                         <td>
                             <a href="{{route('book.show', ['book' => $book->id])}}" target="_blank"
                                 rel="noopener noreferrer">{{$book->name}} </a><br><br>
-                            <a href="#" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="{{route('book.edit', ['book' => $book->id])}}" class="btn btn-primary btn-sm">Edit</a>
                             <form action="{{route('book.destroy', ['book' => $book->id])}}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
