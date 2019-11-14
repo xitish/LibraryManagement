@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Book;
+use App\SingleBook;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -15,8 +17,20 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::withCount('singleBooks')->get();
-        return view('book.index', compact('books'));
+        $books = Book::with('singleBooks')->get();
+        $total = array();
+        $count = array();
+        foreach($books as $i => $book)
+        {
+            $total[$i] = 0;
+            $count[$i] = 0;
+            foreach ($book->singleBooks as $single)
+            {
+                $total[$i]++;
+                if($single->sutdent_id == null){ $count[$i]++; }
+            }
+        }
+        return view('book.index', compact('books', 'total', 'count'));
     }
 
     /**
@@ -26,7 +40,8 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        $count = Book::count();
+        return  view('book.create', compact('count'));
     }
 
     /**
@@ -37,7 +52,47 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [ 
+            'bookname' => 'required|min:5',
+            'author' => 'required',
+            'publication' => 'required',
+            'description' => 'sometimes|min:10',
+            'photo' => 'sometimes|mimes:jpeg,jpg,png|max:1024',
+            'number' => 'required|numeric'
+        ]);
+
+        // Create a Book
+        $book = Book::create([
+            'name' => $request->input('bookname'),
+            'author' => $request->input('author'),
+            'publication' => $request->input('publication'),
+            'description' => $request->input('description'),
+            'photo' => $request->hasFile('photo') ? 'storage/' . $request->file('photo')->store('images/bookphotos') : 'images/dummy.jpg',
+        ]);
+
+        // Find the last book_number of a SingleBook
+        $lastBook = SingleBook::orderBy('book_number', 'desc')->first()->book_number;
+        $bookNumber = $lastBook ;
+
+        // Array to keep the list of book numbers of added copies of a Book
+        $bookNumberList = array();
+
+        // Create the required number of copies of the Book specified by the 'number' input field.
+        for($i = 0; $i < $request->input('number'); $i++)
+        {
+            $bookNumber++;
+            $singleBook = SingleBook::create([
+                'book_number' => $bookNumber,
+                'student_id' => null,
+                'book_id' => $book->id,
+            ]);
+
+            // Add Book Number of current copy to array
+            array_push($bookNumberList, $bookNumber);
+        }
+
+        $count = Book::count();
+        return view('book.create', compact('book','bookNumberList', 'count'));
     }
 
     /**
@@ -82,6 +137,9 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        Storage::delete(str_replace("storage/", "", $book->photo));
+        $book->singleBooks()->delete();
+        $book->delete();
+        dd('deleted');
     }
 }

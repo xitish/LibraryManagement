@@ -9,7 +9,7 @@ class Book extends Model
     //protected $primaryKey = 'book_id';
     
     protected $fillable = [
-        'id', 'name', 'author','publication', 'photo'
+        'name', 'author','publication', 'photo', 'description'
     ];
 
     public function student()

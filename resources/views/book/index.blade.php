@@ -13,8 +13,9 @@
                 </div>
 
                 <div class="book-list-top flex" style="flex-direction:column;">
-                    <div style="flex:1"> 
-                        <a href="{{route('book.create')}}" class="btn btn-primary btn-sm float-right">Add New Book</a> <br>
+                    <div style="flex:1">
+                        <a href="{{route('book.create')}}" class="btn btn-primary btn-sm float-right">Add New Book</a>
+                        <br>
                     </div>
 
                     <div style="flex:1; line-height:10px;">&nbsp;</div>
@@ -40,23 +41,30 @@
                     <tr>
                         <th scope="row">{{$i+1}}</th>
                         <td>
-                            <a href="{{route('book.show', ['book' => $book->id])}}" target="_blank" rel="noopener noreferrer">
+                            <a href="{{route('book.show', ['book' => $book->id])}}" target="_blank"
+                                rel="noopener noreferrer">
                                 <img src="{{asset($book->photo)}}" alt="{{$book->name}} photo" height="100">
                             </a>
                         </td>
-                        <td><a href="{{route('book.show', ['book' => $book->id])}}" target="_blank" rel="noopener noreferrer">{{$book->name}} </a><br><br>
+                        <td>
+                            <a href="{{route('book.show', ['book' => $book->id])}}" target="_blank"
+                                rel="noopener noreferrer">{{$book->name}} </a><br><br>
                             <a href="#" class="btn btn-primary btn-sm">Edit</a>
-                            <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                            <form action="{{route('book.destroy', ['book' => $book->id])}}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                            </form>
                         </td>
                         <td>{{$book->author}}</td>
                         <td>{{$book->publication}}</td>
                         <td>
                             <h6>
-                                Total : <span class="text-success float-right">{{$book->single_books_count}}
+                                Total : <span class="text-success float-right">{{$total[$i]}}
                                     Copies</span><br><br>
-                                Issued : <span class="text-info float-right">12 Copies</span>
+                                Issued : <span class="text-info float-right">{{$total[$i] - $count[$i]}} Copies</span>
                                 <hr>
-                                Remaining : <span class="text-danger float-right">20 Copies</span>
+                                Remaining : <span class="text-danger float-right">{{$count[$i]}} Copies</span>
                             </h6>
                         </td>
                     </tr>
@@ -65,4 +73,5 @@
             </table>
         </div>
     </div>
+</div>
     @endsection
